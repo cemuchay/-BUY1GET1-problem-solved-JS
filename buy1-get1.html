@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> buy 1, get 1 !!!!!</title>
+
+    <style>
+        /* BASIC STYLING */
+        body {
+            background: rgb(98, 93, 93);
+            color: white;
+        }
+
+        div input {
+            margin: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+        li input {
+            width: 25%;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div style="text-align: center;">
+        <h1>Jewelry Store</h1>
+    </div>
+
+    <div style="text-align: center; ">
+        <div>Input number of test Cases (INTEGER ONLY!) <input placeholder="Between 1 and 100" id="testCases"
+                type="text"></div>
+        <button onclick="createList()">Enter</button>
+    </div>
+
+    <ul>
+
+    </ul>
+
+    <script>
+        createList = () => {
+            const testCasesValue = document.querySelector('#testCases').value;
+            const testCaseList = document.querySelector('ul');
+            document.querySelector('button').textContent = 'Reset test cases';
+
+            // REMOVES ALL UL CONTENTS
+            testCaseList.textContent = '';
+
+            // CONSTRAINT CHECK
+            if (testCasesValue > 100 || testCasesValue < 1 || !/^[-+]?[0-9]+$/.test(testCasesValue)) {
+                alert('Please enter a number between 1 and 100');
+                return;
+            }
+
+            // CREATES LIST OF TEST CASES
+
+            for (var i = 0; i < testCasesValue; i++) {
+                const item = document.createElement("li");
+                const input = document.createElement("input");
+                const display4 = document.createElement("p");
+                input.type = "text";
+                input.placeholder = "Enter Sequence for Jewelry " + (i + 1);
+                input.classList.add("input");
+                item.append(input, display4);
+                testCaseList.append(item);
+                display4.classList.add("display4");
+            }
+            checkInput();
+        }
+
+        // CHECK MATCH INPUTS
+        checkInput = () => {
+
+            const stringInputs = document.querySelectorAll(".input");
+            [...stringInputs].map(element => {
+                element.addEventListener("keyup", () => {
+
+                    // VARIABLES 
+                    y = [];
+                    x = [];
+                    var z = 0
+                    let stringCheck = element.value
+                    let displayPrice = element.nextElementSibling
+
+                    // checking if string sequence is valid or not
+                    if (!/^[a-zA-Z]+$/.test(stringCheck)) {
+                        displayPrice.textContent = 'Incorrect Sequence';
+                        return
+                    }
+
+                    //loop to iterate over string
+                    for (let i = 0; i < stringCheck.length; i++) {
+                        //variable counting occurrence by matching each letter
+                        let count = 0;
+                        console.log(stringCheck[i])
+                        for (let j = 0; j < stringCheck.length; j++) {
+                            if (stringCheck[i] == stringCheck[j] && i > j) {
+                                break;
+                            }
+                            if (stringCheck[i] == stringCheck[j]) {
+                                count++;
+                            }
+                        }
+
+                        // for each string more than one occurrence push to array
+                        if (count > 0) {
+                            y.push(count);
+                        }
+
+                    }
+
+                    // get all the vales in y (no of occurences)
+                    y.map(function (item) {
+                        x,
+                        a = item;
+                        if (item > 1) {
+                            x = Math.round(item / 2);
+                        } else {
+                            x = item;
+                        }
+
+                        // add all the values in x to get the total
+                        z = z + x;
+
+                    });
+
+                    // DISPLAY PRICE
+                    if (!z) {
+                        displayPrice.textContent = 'Cost is: $0';
+                        return
+                    } else {
+                        displayPrice.textContent = `Cost is $: ${z}`;
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
